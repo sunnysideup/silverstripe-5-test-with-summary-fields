@@ -62,12 +62,11 @@ class Company extends DataObject
     ];
 
 
-    /**
-     * @var array
-    //  */
-    // private static $casting = [
-    //     'Logo.CMSThumbnail' => 'HTMLText',
-    // ];
+    public function getLogoTest()
+    {
+        return DBField::create_field('HTMLText', '<img src="' . $this->Logo()->Link() . '">');
+    }
+
 
     public function getCMSFields()
     {
@@ -84,8 +83,4 @@ class Company extends DataObject
         ]);
     }
 
-    public function getLogoTest()
-    {
-        return DBField::create_field('HTMLText', '<img src="' . $this->Logo()->Link() . '">');
-    }
 }
