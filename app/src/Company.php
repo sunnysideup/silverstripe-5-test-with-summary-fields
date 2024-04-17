@@ -4,6 +4,7 @@
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBField;
 
 class Company extends DataObject
 {
@@ -47,21 +48,19 @@ class Company extends DataObject
     /**
      * @var array
      */
-    private static $owns = [
-        'Logo',
+    private static $summary_fields = [
+        'Logo.CMSThumbnail' => 'Logo from CMSThumbnail',
+        'Logo.StripThumbnail' => 'Logo from StripThumbnail',
+        'LogoTest' => 'Logo from html',
     ];
-
-    /**
-     * @var string
-     */
-    private static $default_sort = '"SortOrder" ASC';
 
     /**
      * @var array
      */
-    private static $summary_fields = [
-        'Logo.CMSThumbnail' => 'Logo',
+    private static $casting = [
+        'LogoTest' => 'HTMLText',
     ];
+
 
     /**
      * @var array
@@ -83,5 +82,10 @@ class Company extends DataObject
             'Title',
             'Logo',
         ]);
+    }
+
+    public function getLogoTest()
+    {
+        return DBField::create_field('HTMLText', '<img src="' . $this->Logo()->Link() . '">');
     }
 }
